@@ -48,7 +48,6 @@ spotless {
 		indentWithSpaces(2)
 		trimTrailingWhitespace()
 		endWithNewline()
-		googleJavaFormat('1.5')
 	}
 }
 
