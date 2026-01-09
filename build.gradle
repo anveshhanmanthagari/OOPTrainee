@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '4.0.1'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '6.21.0'
 }
 
 group = 'com.example'
@@ -32,6 +33,23 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+
+//add spotless plugin for code formatting
+apply plugin: 'com.diffplug.spotless'
+
+spotless {
+	java {
+		target '**/*.java'
+		removeUnusedImports()
+		googleJavaFormat('1.15.0')
+		importOrder('java', 'javax', 'org', 'com')
+		indentWithSpaces(2)
+		trimTrailingWhitespace()
+		endWithNewline()
+		googleJavaFormat('1.5')
+	}
 }
 
 tasks.named('test') {
