@@ -34,7 +34,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
-
+tasks.register('generateJavadocs', Javadoc) {
+	group = 'Documentation'
+	description = 'Generates Javadocs for the project.'
+	source = sourceSets.main.allJava
+	classpath = sourceSets.main.compileClasspath
+	destinationDir = file("$buildDir/docs/javadoc")
+}
 
 //add spotless plugin for code formatting
 apply plugin: 'com.diffplug.spotless'
