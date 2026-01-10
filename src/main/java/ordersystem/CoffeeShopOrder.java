@@ -1,4 +1,4 @@
-package com.example.OOPTrainee;
+package ordersystem;
 
 import java.util.Scanner;
 
@@ -18,40 +18,40 @@ public class CoffeeShopOrder {
 
     // prices of items
     printStatement("Welcome to the Coffee Shop!");
-    Double CoffeePrice = 3.50;
-    Double TeaPrice = 2.75;
-    Double CakePrice = 2.25;
+    double coffeePrice = 3.50;
+    double teaPrice = 2.75;
+    double cakePrice = 2.25;
     printStatement("Item Prices :");
-    printStatement("Coffee: $" + CoffeePrice);
-    printStatement("Tea: $" + TeaPrice);
-    printStatement("Pastries: $" + CakePrice);
+    printStatement("Coffee: $" + coffeePrice);
+    printStatement("Tea: $" + teaPrice);
+    printStatement("Pastries: $" + cakePrice);
     printStatement("---------------------------");
     printStatement("Please enter your order details:");
     // for taking input from user
     Scanner scanner = new Scanner(System.in);
     printStatement("Enter number of Coffee: ");
-    Integer NumOfCoffeeOrder = Integer.valueOf(scanner.nextLine());
+    int numOfCoffeeOrder = parse(scanner);
     printStatement("Enter number of Tea: ");
-    Integer NumOfTeaOrder = Integer.valueOf(scanner.nextLine());
+    int numOfTeaOrder = parse(scanner);
     printStatement("Enter number of Pastries: ");
-    Integer NumOfPastriesOrder = Integer.valueOf(scanner.nextLine());
+    int numOfPastriesOrder = parse(scanner);
 
     // calculations with arithmetic operators
-    Double subTotal =
-        (NumOfCoffeeOrder * CoffeePrice)
-            + (NumOfTeaOrder * TeaPrice)
-            + (NumOfPastriesOrder * CakePrice);
+    double subTotal =
+        (numOfCoffeeOrder * coffeePrice)
+            + (numOfTeaOrder * teaPrice)
+            + (numOfPastriesOrder * cakePrice);
 
     // tax calculation with 7 percentage
-    Double tax = subTotal * 0.07;
+    double tax = subTotal * (7.0 / 100.0);
 
     // total calculation
-    Double total = subTotal + tax;
+    double total = subTotal + tax;
 
     // printing the receipt with input
-    printStatement("Coffees: " + NumOfCoffeeOrder);
-    printStatement("Teas: " + NumOfTeaOrder);
-    printStatement("Pastries: " + NumOfPastriesOrder);
+    printStatement("Coffees: " + numOfCoffeeOrder);
+    printStatement("Teas: " + numOfTeaOrder);
+    printStatement("Pastries: " + numOfPastriesOrder);
     printStatement("Subtotal: $" + String.format("%.2f", subTotal));
     printStatement("Tax: $" + String.format("%.2f", tax));
     printStatement("Total: $" + String.format("%.2f", total));
@@ -62,12 +62,22 @@ public class CoffeeShopOrder {
 
     // closing statements
     printStatement("Thank you for visiting the Coffee Shop!");
-    printStatement("cashier: Anvesh H \n ID: 1600540");
+    printStatement("Cashier: Anvesh Hanmanthagari \nStudent ID: 1600540");
     printStatement("---------------------------");
     scanner.close();
+    System.exit(0);
   }
-
+  /*
+   * Method to print statements
+   */
   public static void printStatement(String printStatement) {
     System.out.println(printStatement);
+  }
+
+  /*
+   * Method to parse integer input from user
+   */
+  public static int parse(Scanner inputOrder) {
+    return Integer.parseInt(inputOrder.nextLine());
   }
 }
