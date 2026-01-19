@@ -1,11 +1,10 @@
 package creditcardpro;
 
-import static creditcardpro.Constant.BONUS10;
-import static creditcardpro.Constant.TRAVEL5;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static creditcardpro.Constant.*;
 
 public class RewardsTracker {
   public static String promoCode;
@@ -71,25 +70,26 @@ public class RewardsTracker {
     }
     // Print the monthly summary statement with the total spent amount, tier, base points, bonus
     // points, total points earned, promo code and a closing statement
+    statementSeparator();
     printDetails("=== CreditCardPro Monthly Summary ===");
-    printDetails("Date: " + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    printDetails("Date : " + LocalDate.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
     printDetails(
         "Next Billing: "
-            + LocalDate.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            + LocalDate.now().plusMonths(1).format(DateTimeFormatter.ofPattern(DATE_FORMAT)));
     statementSeparator();
 
     printDetails("Total Spending: $" + totalSpentAmount);
-    printDetails("Tier: " + tier);
+    printDetails("Tier : " + tier);
 
     int basePoints = (int) (totalSpentAmount * tierAmount);
-    printDetails("Base Points: " + basePoints);
+    printDetails("Base Points : " + basePoints);
 
     int bonusPoints = (basePoints * promoCodeInt) / 100;
-    printDetails("Bonus Points: " + bonusPoints);
+    printDetails("Bonus Points : " + bonusPoints);
 
-    printDetails("Total Points Earned: " + (basePoints + bonusPoints));
+    printDetails("Total Points Earned : " + (basePoints + bonusPoints));
 
-    printDetails("Promo Code: " + promoCode);
+    printDetails("Promo Code : " + promoCode);
 
     printDetails("Great work! Keep building your rewards");
   }

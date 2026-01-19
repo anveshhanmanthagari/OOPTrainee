@@ -14,5 +14,6 @@ public class Constant {
   public static final String OTHER = "other";
   public static final String BONUS10 = "BONUS10";
   public static final String TRAVEL5 = "TRAVEL5";
+  public static final String DATE_FORMAT = "yyyy-MM-dd";
   public static final List<String> categoriesList = List.of(GROCERY, DINNING, TRAVEL, GAS, OTHER);
 }
