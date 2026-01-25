@@ -1,4 +1,4 @@
-package Introduction;
+package TrineTech;
 
 import java.util.Scanner;
 
