@@ -1,10 +1,10 @@
 package creditcardpro;
 
+import static creditcardpro.Constant.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static creditcardpro.Constant.*;
 
 public class RewardsTracker {
   public static String promoCode;
