@@ -94,7 +94,7 @@ public class RewardApp {
    */
   public static void systemExit(int status) {
     try {
-      stmtPrinter.accept("Exiting application....!!!");
+      stmtPrinter.accept("Exiting Application....!!!!!");
       Thread.sleep(1000); // Pause for 1 second before exiting to flush all logs
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
