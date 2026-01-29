@@ -49,7 +49,7 @@ public class RewardApp {
       stmtPrinter.accept("Enter Customer type (1 for Regular, 2 for Premium): ");
       int customerTypeInput = sc.nextInt();
       stmtPrinter.accept("Enter Customer Name: ");
-      String name = sc.next();
+      String name = sc.nextLine();
       Customer customer;
       // Customer Creation based on type
       if (customerTypeInput == 1) {
@@ -71,7 +71,7 @@ public class RewardApp {
       // Apply bonus multiplier to base points
       double finalPoints = Math.floor(bonusMultiplier.apply(basePoints) * 10) / 10;
 
-      // Reward Statement Generation
+      // Reward Statement Generation2
       stmtPrinter.accept("-------------------------------------");
       stmtPrinter.accept("Generating Reward Statement...!!!!!!!");
       stmtPrinter.accept("Customer Name : " + customer.getName());
