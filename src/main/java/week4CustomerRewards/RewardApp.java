@@ -9,7 +9,7 @@ public class RewardApp {
 
   /**
    * Processes customer reward calculation by collecting user input, creating the appropriate
-   * customer type, and generating a reward statement.
+   * customer type, and generating a reward statement with bonus .
    *
    * <p>This method performs the following steps:
    *
@@ -33,13 +33,13 @@ public class RewardApp {
    *
    * <ul>
    *   <li>{@code 0} – Successful execution and statement generation
-   *   <li>{@code 2} – Invalid input or runtime error
+   *   <li>{@code 2} – Invalid input or runtime error and system exit
    * </ul>
    *
    * @throws IllegalArgumentException if an invalid customer type is entered
    * @see Customer
-   * @see RegularCustomer
-   * @see PremiumCustomer
+   * @see RegularCustomer for calculation of base points
+   * @see PremiumCustomer for calculation of base points
    */
   public static void main(String[] args) {
 
@@ -106,7 +106,7 @@ public class RewardApp {
 
     System.exit(status);
   }
-  // Bonus multiplier function
+  // Bifunction for two inputs and calculating Bonus multiplier with functional interface
   static BiFunction<Double, Double, Double> bonusMultiplier =
       (points, percentage) -> points * (1 + percentage / 100);
   // Statement printer using Consumer functional interface
