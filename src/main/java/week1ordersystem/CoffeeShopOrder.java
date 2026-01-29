@@ -1,4 +1,4 @@
-package ordersystem;
+package week1ordersystem;
 
 import java.util.Scanner;
 
