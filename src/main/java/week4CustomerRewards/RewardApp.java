@@ -1,10 +1,8 @@
 package week4CustomerRewards;
-
 import java.util.Scanner;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
-
 public class RewardApp {
 
   /**
@@ -22,7 +20,7 @@ public class RewardApp {
    *   <li>Displays a detailed reward statement including date and time
    * </ul>
    *
-   * <p>The method uses {@link java.util.function.DoubleFunction} as a functional interface and
+   * <p>Method uses {@link java.util.function.DoubleFunction} as a functional interface and
    * demonstrates the use of method references and lambda expressions to simplify reward
    * calculations.
    *
