@@ -78,6 +78,7 @@ public class RewardApp {
       stmtPrinter.accept("Customer Type : " + customer.getType());
       stmtPrinter.accept("Purchase Amount  : $" + purchaseAmount);
       stmtPrinter.accept("Base Reward Points ::   " + basePoints);
+      stmtPrinter.accept("Bonus Applied ::    10%");
       stmtPrinter.accept("Final Reward Points (After Bonus): " + finalPoints);
       stmtPrinter.accept("Date : " + java.time.LocalDate.now());
       stmtPrinter.accept("Time : " + java.time.LocalTime.now());
