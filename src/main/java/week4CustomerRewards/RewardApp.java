@@ -4,6 +4,7 @@ import java.util.Scanner;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
+import java.util.function.Predicate;
 
 public class RewardApp {
 
@@ -53,14 +54,10 @@ public class RewardApp {
       String name = sc.nextLine();
       Customer customer;
       // Customer Creation based on type
-      if (customerTypeInput == 1) {
-        customer = new RegularCustomer(name);
-      } else if (customerTypeInput == 2) {
-        customer = new PremiumCustomer(name);
-      } else {
-        stmtPrinter.accept("Invalid customer type. Defaulting to Regular Customer.");
-        throw new IllegalArgumentException("Invalid customer type");
-      }
+      customer =
+          checkCustomerRegularType.test(customerTypeInput)
+              ? new RegularCustomer(name)
+              : new PremiumCustomer(name);
       stmtPrinter.accept("Enter Purchase Amount: ");
       // purchase amount input
       double purchaseAmount = sc.nextDouble();
@@ -106,9 +103,24 @@ public class RewardApp {
 
     System.exit(status);
   }
-  // Bifunction for two inputs and calculating Bonus multiplier with functional interface
+
+  /** BiFunction to calculate final reward points after applying a bonus percentage. */
   static BiFunction<Double, Double, Double> bonusMultiplier =
       (points, percentage) -> points * (1 + percentage / 100);
-  // Statement printer using Consumer functional interface
+
+  /**
+   * for printing statements to the console.
+   *
+   * <p>This uses a method reference to {@link System#out println}, allowing any string passed to be
+   * printed directly to the console.
+   */
   static Consumer<String> stmtPrinter = System.out::println;
+
+  /**
+   * Predicate to check whether a customer is of type "Regular".
+   *
+   * <p>This uses a lambda expression to evaluate an integer value representing the customer type.
+   * Returns {@code true} if the type equals 1 (Regular), otherwise returns {@code false}.
+   */
+  static Predicate<Integer> checkCustomerRegularType = (type) -> type == 1;
 }
