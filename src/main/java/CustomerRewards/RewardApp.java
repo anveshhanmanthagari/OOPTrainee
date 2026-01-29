@@ -1,9 +1,9 @@
 package CustomerRewards;
 
 import java.util.Scanner;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
-import java.util.function.Function;
 
 public class RewardApp {
 
@@ -49,7 +49,8 @@ public class RewardApp {
       stmtPrinter.accept("Enter Customer type (1 for Regular, 2 for Premium): ");
       int customerTypeInput = sc.nextInt();
       stmtPrinter.accept("Enter Customer Name: ");
-      String name = sc.next();
+      sc.nextLine();
+      String name = sc.nextLine();
       Customer customer;
       // Customer Creation based on type
       if (customerTypeInput == 1) {
@@ -68,8 +69,10 @@ public class RewardApp {
       DoubleFunction<Double> pointsCalculator = customer::calculatePoints;
       // Calculate base points
       double basePoints = pointsCalculator.apply(purchaseAmount);
+      // Bonus percentage
+      double bonusPercentage = 10;
       // Apply bonus multiplier to base points
-      double finalPoints = Math.floor(bonusMultiplier.apply(basePoints) * 10) / 10;
+      double finalPoints = Math.floor(bonusMultiplier.apply(basePoints, bonusPercentage) * 10) / 10;
 
       // Reward Statement Generation2
       stmtPrinter.accept("-------------------------------------");
@@ -78,7 +81,7 @@ public class RewardApp {
       stmtPrinter.accept("Customer Type : " + customer.getType());
       stmtPrinter.accept("Purchase Amount  : $" + purchaseAmount);
       stmtPrinter.accept("Base Reward Points ::   " + basePoints);
-      stmtPrinter.accept("Bonus Applied ::    10%");
+      stmtPrinter.accept("Bonus Applied ::    " + bonusPercentage + "%");
       stmtPrinter.accept("Final Reward Points (After Bonus): " + finalPoints);
       stmtPrinter.accept("Date : " + java.time.LocalDate.now());
       stmtPrinter.accept("Time : " + java.time.LocalTime.now());
@@ -104,7 +107,8 @@ public class RewardApp {
     System.exit(status);
   }
   // Bonus multiplier function
-  static Function<Double, Double> bonusMultiplier = points -> points * 1.10;
+  static BiFunction<Double, Double, Double> bonusMultiplier =
+      (points, percentage) -> points * (1 + percentage / 100);
   // Statement printer using Consumer functional interface
   static Consumer<String> stmtPrinter = System.out::println;
 }
