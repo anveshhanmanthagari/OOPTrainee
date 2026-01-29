@@ -1,4 +1,4 @@
-package CustomerRewards;
+package week4CustomerRewards;
 /**
  * Enum representing different types of Customers
  *

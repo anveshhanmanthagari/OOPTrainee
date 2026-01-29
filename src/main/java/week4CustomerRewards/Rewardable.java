@@ -1,4 +1,4 @@
-package CustomerRewards;
+package week4CustomerRewards;
 /**
  * Represents a functional interface for calculating reward points based on a customer's purchase
  * amount.

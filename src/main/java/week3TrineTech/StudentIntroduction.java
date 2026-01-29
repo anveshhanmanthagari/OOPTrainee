@@ -1,4 +1,4 @@
-package TrineTech;
+package week3TrineTech;
 
 import java.util.Scanner;
 

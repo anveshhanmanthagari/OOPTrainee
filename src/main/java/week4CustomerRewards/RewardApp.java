@@ -1,4 +1,4 @@
-package CustomerRewards;
+package week4CustomerRewards;
 
 import java.util.Scanner;
 import java.util.function.BiFunction;

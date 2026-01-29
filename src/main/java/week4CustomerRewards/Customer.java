@@ -1,4 +1,4 @@
-package CustomerRewards;
+package week4CustomerRewards;
 
 import lombok.Getter;
 

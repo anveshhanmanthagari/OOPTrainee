@@ -1,4 +1,4 @@
-package creditcardpro;
+package week2Creditcardpro;
 
 import java.util.List;
 

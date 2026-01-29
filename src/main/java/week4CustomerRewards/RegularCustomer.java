@@ -1,6 +1,6 @@
-package CustomerRewards;
+package week4CustomerRewards;
 
-import static CustomerRewards.RewardApp.stmtPrinter;
+import static week4CustomerRewards.RewardApp.stmtPrinter;
 
 public final class RegularCustomer extends Customer {
   /** Constructor to initialize RegularCustomer with name and type */

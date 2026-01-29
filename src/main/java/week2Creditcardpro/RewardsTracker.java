@@ -1,6 +1,6 @@
-package creditcardpro;
+package week2Creditcardpro;
 
-import static creditcardpro.Constant.*;
+import static week2Creditcardpro.Constant.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
