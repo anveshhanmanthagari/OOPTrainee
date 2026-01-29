@@ -49,7 +49,7 @@ public class RewardApp {
       stmtPrinter.accept("Enter Customer type (1 for Regular, 2 for Premium): ");
       int customerTypeInput = sc.nextInt();
       stmtPrinter.accept("Enter Customer Name: ");
-      String name = sc.nextLine();
+      String name = sc.next();
       Customer customer;
       // Customer Creation based on type
       if (customerTypeInput == 1) {
@@ -93,7 +93,13 @@ public class RewardApp {
    * Method to exit the application with a given status code.
    */
   public static void systemExit(int status) {
-    stmtPrinter.accept("Exiting application....!!!");
+    try {
+      stmtPrinter.accept("Exiting application....!!!");
+      Thread.sleep(1000); // Pause for 1 second before exiting to flush all logs
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+
     System.exit(status);
   }
   // Bonus multiplier function
