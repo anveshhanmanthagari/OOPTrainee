@@ -20,6 +20,6 @@ public final class PremiumCustomer extends Customer {
   @Override
   public double calculatePoints(double purchaseAmount) {
     stmtPrinter.accept("Calculating points from Premium Customer for amount : " + purchaseAmount);
-    return purchaseAmount * 1.5;
+    return  calculateBasePoints.apply(purchaseAmount, 1.5);
   }
 }

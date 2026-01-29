@@ -1,5 +1,7 @@
 package week4CustomerRewards;
 
+import java.util.function.BiFunction;
+
 import lombok.Getter;
 
 /**
@@ -27,4 +29,16 @@ public abstract sealed class Customer implements Rewardable
     this.name = name.toUpperCase();
     this.type = type;
   }
+
+  /*
+   * * BiFunction to calculate base points based on purchase amount and rate
+   */
+
+  static BiFunction<Double, Double, Double> calculateBasePoints =
+      (purchaseAmount, rate) -> {
+        if (purchaseAmount <= 0) {
+          return 0.0;
+        }
+        return purchaseAmount * rate;
+      };
 }

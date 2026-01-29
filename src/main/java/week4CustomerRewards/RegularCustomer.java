@@ -16,6 +16,6 @@ public final class RegularCustomer extends Customer {
   @Override
   public double calculatePoints(double purchaseAmount) {
     stmtPrinter.accept("Calculating points as Regular Customer for Amount: " + purchaseAmount);
-    return purchaseAmount * 1.0;
+    return calculateBasePoints.apply(purchaseAmount, 1.0);
   }
 }

@@ -1,8 +1,10 @@
 package week4CustomerRewards;
+
 import java.util.Scanner;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.DoubleFunction;
+
 public class RewardApp {
 
   /**
