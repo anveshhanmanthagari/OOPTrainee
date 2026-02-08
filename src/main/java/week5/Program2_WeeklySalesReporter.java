@@ -33,11 +33,11 @@ public class Program2_WeeklySalesReporter {
         printStmt("________________________________");
 
         double totalSales = calculateTotalSales(sales);
-        double averageSales = totalSales / numberOfDays;
-        printStmt("Store : " + storeName.toUpperCase());
+        double averageSales = totalSales / sales.size();
+        printStmt("\nStore : " + storeName.toUpperCase());
         printStmt("\nDaily Sales: " + dailySalesReportMsgStructure(sales));
         printStmt("\nAverage Daily Sales: " + formatCurrency(averageSales));
-        printStmt("\nTotal Sales: " + formatCurrency(totalSales));
+        printStmt("\nTotal Sales amount : " + formatCurrency(totalSales) + " for " + numberOfDays + " days");
         printStmt("________________________________");
         printStmt("calculated on : " +
                 java.time.LocalDate.now()
