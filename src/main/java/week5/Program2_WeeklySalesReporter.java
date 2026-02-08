@@ -50,7 +50,7 @@ public class Program2_WeeklySalesReporter {
     /**
      * Utility method to print a statement to the console.
      *
-     * @param printStmt
+     * @param printStmt to be printed
      */
     public static void printStmt(String printStmt) {
         System.out.println(printStmt);
@@ -59,8 +59,8 @@ public class Program2_WeeklySalesReporter {
     /**
      * Formats a double value as a currency string with two decimal places and a dollar sign.
      *
-     * @param amount
-     * @return
+     * @param amount to be formatted
+     * @return formatted currency string
      */
     public static String formatCurrency(double amount) {
         return String.format("$%.2f", amount);
@@ -69,8 +69,8 @@ public class Program2_WeeklySalesReporter {
     /**
      * Formats the daily sales data into a comma-separated string for reporting.
      *
-     * @param salesData
-     * @return
+     * @param salesData list of daily sales amounts
+     * @return formatted string of daily sales for the report
      */
     public static String dailySalesReportMsgStructure(List<Double> salesData) {
         return salesData.stream()
@@ -81,8 +81,8 @@ public class Program2_WeeklySalesReporter {
     /**
      * Calculates the total sales from a list of daily sales amounts.
      *
-     * @param salesData
-     * @return
+     * @param salesData list of daily sales amounts
+     * @return total sales amount
      */
     public static double calculateTotalSales(List<Double> salesData) {
         double total = 0.0;
@@ -100,9 +100,9 @@ public class Program2_WeeklySalesReporter {
     /**
      * Collects daily sales data from the user for a specified number of days.
      *
-     * @param numberOfDays
-     * @param sc
-     * @return
+     * @param numberOfDays the number of days to collect sales data for
+     * @param sc           Scanner object for reading user input
+     * @return list of daily sales amounts entered by the user
      */
     public static List<Double> collectSalesData(int numberOfDays, Scanner sc) {
         List<Double> sales = new ArrayList<>();
