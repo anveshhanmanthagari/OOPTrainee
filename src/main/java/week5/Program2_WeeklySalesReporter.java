@@ -46,9 +46,9 @@ public class Program2_WeeklySalesReporter {
         double totalSales = stats.getSum();
         double averageSales = stats.getAverage();
         printStmt("Store : " + storeName.toUpperCase());
-        printStmt("Daily Sales: " + dailySalesReportMsgStructure(salesData));
-        printStmt("Average Daily Sales: " + formatCurrency(averageSales));
-        printStmt("Total Sales: $" + formatCurrency(totalSales));
+        printStmt("\nDaily Sales: " + dailySalesReportMsgStructure(salesData));
+        printStmt("\nAverage Daily Sales: " + formatCurrency(averageSales));
+        printStmt("\nTotal Sales: " + formatCurrency(totalSales));
     }
 
     public static void printStmt(String printStmt) {
