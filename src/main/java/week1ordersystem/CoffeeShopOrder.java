@@ -2,9 +2,8 @@ package week1ordersystem;
 
 import java.util.Scanner;
 
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+//import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
 public class CoffeeShopOrder {
   /*
    * Coffee Shop Order System

@@ -74,8 +74,8 @@ public class RewardApp {
       // Reward Statement Generation2
       stmtPrinter.accept("-------------------------------------");
       stmtPrinter.accept("Generating Reward Statement...!!!!!!!");
-      stmtPrinter.accept("Customer Name : " + customer.getName());
-      stmtPrinter.accept("Customer Type : " + customer.getType());
+//      stmtPrinter.accept("Customer Name : " + customer.getName());
+//      stmtPrinter.accept("Customer Type : " + customer.getType());
       stmtPrinter.accept("Purchase Amount  : $" + purchaseAmount);
       stmtPrinter.accept("Base Reward Points ::   " + basePoints);
       stmtPrinter.accept("Bonus Applied ::    " + bonusPercentage + "%");

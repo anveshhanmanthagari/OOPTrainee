@@ -126,4 +126,27 @@ public class RewardsTracker {
 
     return promoCodeInt;
   }
+
+  public static int bonusPointsWithJDK17() {
+    Scanner sc = new Scanner(System.in);
+    String promoCo = sc.next();
+    promoCode = promoCo.toUpperCase();
+    int promoCodeInt;
+    switch (promoCode) {
+      case BONUS10:
+        promoCodeInt = 10;
+        break;
+      case TRAVEL5:
+        promoCodeInt = 5;
+        break;
+      default:
+        promoCodeInt = 0;
+        promoCode = "Invalid Promo Code";
+        break;
+    }
+
+    return promoCodeInt;
+  }
+
+
 }

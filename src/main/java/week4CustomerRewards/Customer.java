@@ -2,7 +2,7 @@ package week4CustomerRewards;
 
 import java.util.function.BiFunction;
 
-import lombok.Getter;
+//import lombok.Getter;
 
 /**
  * Abstract sealed class representing a Customer Implements Rewardable interface for reward point
@@ -13,7 +13,7 @@ import lombok.Getter;
  *
  * @author Anvesh Hanmanthagari
  */
-@Getter
+//@Getter
 public abstract sealed class Customer implements Rewardable
     permits RegularCustomer, PremiumCustomer {
   // Common attributes for all customers
