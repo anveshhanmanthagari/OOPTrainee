@@ -16,46 +16,89 @@ public class SecureSureClaimTracker extends JFrame {
     private JLabel claimLabel;
     private JButton addButton;
     private JButton resetButton;
+    private JButton shutdownFrame;
 
     public SecureSureClaimTracker() {
-
         setTitle("SecureSure Claim Tracker");
-        setSize(400, 200);
+        setSize(750, 620);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new FlowLayout());
 
-        claimLabel = new JLabel("Claims Processed: 0");
-        claimLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        add(claimLabel);
+        Color skyBlue = new Color(135, 206, 235);
 
-        // Add Claim and reset Buttons
-        addButton = new JButton("Add Claim");
-        add(addButton);
-        resetButton = new JButton("Reset");
-        add(resetButton);
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setBackground(skyBlue);
+        headerPanel.setPreferredSize(new Dimension(750, 120));
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+// Logo (left)
+        ImageIcon logoIcon = new ImageIcon("src/main/resources/img.png");
+        Image scaledLogo = logoIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(scaledLogo));
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
 
-                updateClaimCount();
+        headerPanel.add(logoLabel, BorderLayout.WEST);
 
-            }
+// Title (center)
+        JLabel titleLabel = new JLabel("SecureSure Claim Tracker", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
+        titleLabel.setForeground(Color.DARK_GRAY);
+        headerPanel.add(titleLabel, BorderLayout.CENTER);
+
+        add(headerPanel, BorderLayout.NORTH);
+        JPanel centerPanel = new JPanel();
+        centerPanel.setLayout(new GridLayout(4, 1, 20, 20));
+        centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
+        centerPanel.setBackground(Color.WHITE);
+
+// Claim Label
+        claimLabel = new JLabel("CLAIMS PROCESSED : 0", SwingConstants.CENTER);
+        claimLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        claimLabel.setForeground(Color.BLACK);
+        centerPanel.add(claimLabel);
+
+// Add Button
+        addButton = new JButton("ADD CLAIM TO TRACKER");
+        addButton.setFont(new Font("Arial", Font.BOLD, 18));
+        addButton.setBackground(new Color(34, 139, 34));
+        addButton.setForeground(new Color(34, 139, 34));
+        centerPanel.add(addButton);
+
+// Reset Button
+        resetButton = new JButton("RESET TRACKER");
+        resetButton.setFont(new Font("Arial", Font.BOLD, 18));
+        resetButton.setBackground(new Color(255, 204, 0));
+        resetButton.setForeground(new Color(255, 204, 0));
+        centerPanel.add(resetButton);
+
+// Close Button
+        shutdownFrame = new JButton("CLOSE TRACKER");
+        shutdownFrame.setFont(new Font("Arial", Font.BOLD, 18));
+        shutdownFrame.setBackground(new Color(220, 20, 60));
+        shutdownFrame.setForeground(new Color(220, 20, 60));
+        centerPanel.add(shutdownFrame);
+
+        add(centerPanel, BorderLayout.CENTER);
+        // Action Listeners
+        addButton.addActionListener(e -> {
+            System.out.println("Processing new claim...");
+            updateClaimCount();
         });
 
-        resetButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        resetButton.addActionListener(e -> {
+            System.out.println("Resetting claim count and log...");
+            resetClaims();
+        });
 
-                resetClaims();
-
-            }
+        shutdownFrame.addActionListener(e -> {
+            System.out.println("Shutting down SecureSure Claim Tracker...");
+            dispose();
+            System.exit(0);
         });
     }
 
     /*
-    * Method to update claim count, log the claim, and update the label. Also checks for milestones.
+     * Method to update claim count, log the claim, and update the label. Also checks for milestones.
      */
     private void updateClaimCount() {
 
@@ -66,26 +109,42 @@ public class SecureSureClaimTracker extends JFrame {
         claimLog.add(claimCount);
 
         // Update label
-        claimLabel.setText("Claims Processed: " + claimCount);
+        claimLabel.setText(" Claims Processed: " + claimCount);
 
         // Conditional milestone message
         if (claimCount % 10 == 0) {
             System.out.println("Milestone reached: " + claimCount + " claims processed!");
 
-            JOptionPane.showMessageDialog(this,
-                    "Congratulations! You've logged " + claimCount + " claims.");
+            System.out.println("Milestone reached!");
+
+            // Change label color for celebration
+            claimLabel.setForeground(new Color(0, 128, 255));
+
+            // Custom celebration panel
+            JPanel celebrationPanel = new JPanel();
+            celebrationPanel.setBackground(new Color(255, 230, 150));
+            celebrationPanel.add(new JLabel("🎉 Congratulations! " + claimCount + " Claims Achieved! 🎉"));
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    celebrationPanel,
+                    "Milestone Achievement!",
+                    JOptionPane.INFORMATION_MESSAGE
+            );
+
+            // Reset label color after popup
+            claimLabel.setForeground(Color.DARK_GRAY);
 
         }
 
     }
 
     /*
-        * Method to reset claim count and log, and update the label accordingly.
+     * Method to reset claim count and log, and update the label accordingly.
      */
     private void resetClaims() {
 
         claimCount = 0;
-
         claimLog.clear();
         System.out.println("Claim log reset.");
         claimLabel.setText("Claims Processed: 0");
