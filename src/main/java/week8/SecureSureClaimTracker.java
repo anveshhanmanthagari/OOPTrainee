@@ -3,6 +3,8 @@ package week8;
 import javax.swing.*;
 import java.awt.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -19,20 +21,31 @@ public class SecureSureClaimTracker extends JFrame {
     private int claimCount = 0;
 
     // ArrayList to store each claim entry (log simulation)
-    private ArrayList<Integer> claimLog = new ArrayList<>();
+    private ArrayList<String> claimLog = new ArrayList<>();
+    private static final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
 
     // GUI Components
     private JLabel claimLabel;
     private JButton addButton;
     private JButton resetButton;
     private JButton shutdownFrame;
+    private JTextArea logArea;
 
     // Main Method (Runs GUI on EDT)
 
     /**
-     * The main entry point of the application. It initializes the SecureSure Claim Tracker GUI and makes it visible.
-     * The GUI is launched on the Event Dispatch Thread (EDT) to ensure thread safety for Swing components.
-     * @param args
+     * The main entry point of the SecureSure Claim Tracker application.
+     *
+     * This method initializes the graphical user interface (GUI) and ensures
+     * that it is created and executed on the Event Dispatch Thread (EDT).
+     * Running the application on the EDT guarantees thread safety, as Swing
+     * components are not thread-safe and must be accessed only from this thread.
+     *
+     * The method prints a startup message to the console and launches the
+     * SecureSureClaimTracker frame, making it visible to the user.
+     *
+     * @param args Command-line arguments passed to the application (not used).
      */
     public static void main(String[] args) {
         System.out.println("Starting SecureSure Claim Tracker...");
@@ -51,168 +64,248 @@ public class SecureSureClaimTracker extends JFrame {
     }
 
     /**
-     * Constructor to set up the GUI components and layout for the SecureSure Claim Tracker application.
-     * It initializes the frame, header panel with logo and title, and the main center panel with claim count
-     * label and action buttons. It also sets up action listeners for each button to handle claim processing,
-     * resetting, and shutting down the application.
+     * Constructs and initializes the SecureSure Claim Tracker graphical user interface.
+     *
+     * This constructor configures the main application window, including layout
+     * structure, visual styling, and interactive components. The frame uses a
+     * BorderLayout to organize the interface into three primary sections:
+     *
+     * 1. Top Section (NORTH):
+     *    Displays the company logo, application title, and a dynamically updated
+     *    label showing the total number of processed claims.
+     *
+     * 2. Middle Section (CENTER):
+     *    Contains a non-editable text area within a scroll pane to display
+     *    real-time claim log entries, including timestamps.
+     *
+     * 3. Bottom Section (SOUTH):
+     *    Provides inline action buttons for adding claims, resetting the tracker,
+     *    and closing the application.
+     *
+     * Event listeners are attached to each button to handle user interactions.
+     * The "Add Claim" button updates the claim count and logs the transaction.
+     * The "Reset" button clears all stored data and refreshes the display.
+     * The "Close" button terminates the application safely.
+     *
+     * The layout design emphasizes clarity, maintainability, and professional
+     * usability standards suitable for internal business tools.
      */
     public SecureSureClaimTracker() {
 
-        // Frame setup
-        setTitle(" SecureSure Claim Tracker ");
-        setSize(750, 620);
+        setTitle("SecureSure Claim Tracker");
+        setSize(750, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new FlowLayout());
+        setLayout(new BorderLayout());
 
-        // Custom colors
         Color skyBlue = new Color(135, 206, 235);
 
-        // Header Panel with logo and title
-        JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(skyBlue);
-        headerPanel.setPreferredSize(new Dimension(750, 120));
+        // =======================
+        // TOP SECTION
+        // =======================
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(skyBlue);
+        topPanel.setPreferredSize(new Dimension(750, 150));
 
-        // Logo (left)
+        // Logo
         ImageIcon logoIcon = new ImageIcon("src/main/resources/img.png");
-        Image scaledLogo = logoIcon.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        Image scaledLogo = logoIcon.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         JLabel logoLabel = new JLabel(new ImageIcon(scaledLogo));
         logoLabel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 10));
+        topPanel.add(logoLabel, BorderLayout.WEST);
 
-        // Add logo to header panel
-        headerPanel.add(logoLabel, BorderLayout.WEST);
+        // Title + Count
+        JPanel titlePanel = new JPanel(new GridLayout(2, 1));
+        titlePanel.setBackground(skyBlue);
 
-        // Title (center)
-        JLabel titleLabel = new JLabel(" SECURE SURE CLAIM TRACKER ", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("SECURE SURE CLAIM TRACKER", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 22));
         titleLabel.setForeground(Color.DARK_GRAY);
-        headerPanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Add header panel to frame
-        add(headerPanel, BorderLayout.NORTH);
-        JPanel centerPanel = new JPanel();
-        centerPanel.setLayout(new GridLayout(4, 1, 20, 20));
-        centerPanel.setBorder(BorderFactory.createEmptyBorder(40, 60, 40, 60));
-        centerPanel.setBackground(Color.WHITE);
-
-
-        // Claim Label
-        claimLabel = new JLabel(" CLAIMS PROCESSED : 0 ", SwingConstants.CENTER);
-        claimLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        claimLabel = new JLabel("Total Claims: 0", SwingConstants.CENTER);
+        claimLabel.setFont(new Font("Arial", Font.BOLD, 20));
         claimLabel.setForeground(Color.BLACK);
-        centerPanel.add(claimLabel);
 
+        titlePanel.add(titleLabel);
+        titlePanel.add(claimLabel);
 
-        // Add Button
-        addButton = new JButton(" ADD CLAIM TO TRACKER ");
-        addButton.setFont(new Font("Arial", Font.BOLD, 18));
+        topPanel.add(titlePanel, BorderLayout.CENTER);
 
-        //addButton.setBackground(new Color(34, 139, 34));
+        add(topPanel, BorderLayout.NORTH);
+
+        // =======================
+        // MIDDLE SECTION (Claim Logs)
+        // =======================
+        logArea = new JTextArea();
+        logArea.setEditable(false);
+        logArea.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        logArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JScrollPane scrollPane = new JScrollPane(logArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        // =======================
+        // BOTTOM SECTION (Buttons Inline)
+        // =======================
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 15));
+
+        addButton = new JButton("ADD CLAIM");
         addButton.setForeground(new Color(34, 139, 34));
-        centerPanel.add(addButton);
+        addButton.setFont(new Font("Arial", Font.BOLD, 16));
 
-
-        // Reset Button
-        resetButton = new JButton(" RESET TRACKER ");
-        resetButton.setFont(new Font("Arial", Font.BOLD, 18));
-
-        //resetButton.setBackground(new Color(255, 204, 0));
+        resetButton = new JButton("RESET");
         resetButton.setForeground(new Color(255, 204, 0));
-        centerPanel.add(resetButton);
+        resetButton.setFont(new Font("Arial", Font.BOLD, 16));
 
-
-        // Close Button
-        shutdownFrame = new JButton(" CLOSE TRACKER ");
-        shutdownFrame.setFont(new Font("Arial", Font.BOLD, 18));
-
-        //shutdownFrame.setBackground(new Color(220, 20, 60));
+        shutdownFrame = new JButton("CLOSE");
         shutdownFrame.setForeground(new Color(220, 20, 60));
-        centerPanel.add(shutdownFrame);
-        add(centerPanel, BorderLayout.CENTER);
+        shutdownFrame.setFont(new Font("Arial", Font.BOLD, 16));
 
-        // Action Listeners
-        addButton.addActionListener(e -> {
-            System.out.println("Processing new claim...");
-            updateClaimCount();
-        });
+        bottomPanel.add(addButton);
+        bottomPanel.add(resetButton);
+        bottomPanel.add(shutdownFrame);
 
-        // Reset button action listener to reset claim count and log
-        resetButton.addActionListener(e -> {
-            System.out.println("Resetting claim count and log...");
-            resetClaims();
-        });
+        add(bottomPanel, BorderLayout.SOUTH);
 
-        // Shutdown button action listener to close the application
+        // =======================
+        // ACTION LISTENERS
+        // =======================
+        addButton.addActionListener(e -> updateClaimCount());
+
+        resetButton.addActionListener(e -> resetClaims());
+
         shutdownFrame.addActionListener(e -> {
-            System.out.println("Shutting down SecureSure Claim Tracker...");
             dispose();
             System.exit(0);
         });
     }
 
     /**
+     * Increments the claim count, logs the transaction with a precise timestamp,
+     * updates the user interface, and triggers milestone notifications.
      *
-     * Method to update the claim count, log the claim, and update the label.
-     * It also checks for milestones every 10 claims and displays a celebration message.
-     * This method is called when the "ADD CLAIM TO TRACKER" button is clicked, allowing the user to increment
-     * the claim count and see real-time updates in the GUI.
-     * It provides console feedback for each claim processed and celebrates milestones
-     * with a popup message and color change in the label.
+     * This method is executed when the user clicks the "ADD CLAIM" button.
+     * It performs the following operations:
      *
+     * 1. Increments the internal claim counter.
+     * 2. Captures the current date and time (including milliseconds) at the
+     *    exact moment the event is triggered.
+     * 3. Creates a formatted log entry combining the timestamp and claim number.
+     * 4. Stores the log entry in the claimLog collection to preserve historical data.
+     * 5. Updates the total claims label displayed in the top section of the GUI.
+     * 6. Refreshes the log display area by iterating through all stored entries
+     *    using a for-loop to ensure consistent rendering.
+     * 7. Displays a celebration popup when a milestone (every 10 claims) is reached.
+     *
+     * This design ensures accurate event-based logging, maintains data integrity,
+     * and provides real-time visual feedback to the user. The method supports
+     * enterprise-style transaction tracking and milestone monitoring.
      */
     private void updateClaimCount() {
 
+
         claimCount++;
 
-        System.out.println("CLAIMS #" + claimCount + " processed.");
-        // Store in ArrayList
-        claimLog.add(claimCount);
+        // Capture timestamp at trigger time
+        String timestamp = LocalDateTime.now().format(formatter);
 
-        // Update label
-        claimLabel.setText(" CLAIMS PROCESSED : " + claimCount);
+        // Create log entry
+        String logEntry = "[" + timestamp + "] Claim #" + claimCount + " added successfully.";
 
-        // Conditional milestone message
+        System.out.println(logEntry);
+
+        // Store full log entry (not just count)
+        claimLog.add(logEntry);
+
+        // Update total label
+        claimLabel.setText("Total Claims: " + claimCount);
+
+        // Refresh display using FOR loop
+        logArea.setText("");
+        for (int i = 0; i < claimLog.size(); i++) {
+            logArea.append(claimLog.get(i) + "\n");
+        }
+
+        // Milestone popup
         if (claimCount % 10 == 0) {
-            System.out.println("Milestone reached: " + claimCount + " claims processed!");
 
-            System.out.println("Milestone reached!");
-
-            // Change label color for celebration
-            claimLabel.setForeground(new Color(0, 128, 255));
-
-            // Custom celebration panel
             JPanel celebrationPanel = new JPanel();
             celebrationPanel.setBackground(new Color(255, 230, 150));
-            celebrationPanel.add(new JLabel("🎉 Congratulations! " + claimCount + " Claims Achieved! 🎉"));
+            celebrationPanel.setLayout(new BorderLayout(10, 10));
+
+            JLabel message = new JLabel(
+                    "🎉 Congratulations! " + claimCount + " Claims Achieved! 🎉",
+                    SwingConstants.CENTER
+            );
+            message.setFont(new Font("Arial", Font.BOLD, 18));
+            message.setForeground(new Color(0, 128, 255));
+
+            celebrationPanel.add(message, BorderLayout.CENTER);
 
             JOptionPane.showMessageDialog(
                     this,
                     celebrationPanel,
-                    "Milestone Achievement!",
+                    "Milestone Achievement",
                     JOptionPane.INFORMATION_MESSAGE
             );
-
-            // Reset label color after popup
-            claimLabel.setForeground(Color.DARK_GRAY);
-
         }
-
     }
 
-    /*
-     * Method to reset claim count and log, and update the label accordingly.
-     * This method is called when the reset button is clicked,
-     * allowing the user to start fresh with a new claim count and an empty log.
-     * It also provides console feedback about the reset action.
+    /**
+     * Resets the claim tracker after user confirmation and updates the interface accordingly.
+     *
+     * This method is triggered when the user clicks the "RESET" button.
+     * It first displays a confirmation dialog to prevent accidental data loss.
+     * If the user confirms the reset action, the method performs the following steps:
+     *
+     * 1. Resets the internal claim counter to zero.
+     * 2. Clears all stored claim log entries from memory.
+     * 3. Updates the total claims label to reflect the reset state.
+     * 4. Clears the displayed log area in the GUI.
+     * 5. Displays a styled notification panel indicating that all claims
+     *    have been successfully reset.
+     *
+     * The confirmation step ensures safe state management, while the
+     * visual feedback reinforces transparency and user awareness.
+     * This approach aligns with professional software design practices
+     * that prioritize data protection and clear user communication.
      */
     private void resetClaims() {
 
-        claimCount = 0;
-        claimLog.clear();
-        System.out.println("Claim log reset.");
-        claimLabel.setText(" CLAIMS PROCESSED : 0 ");
+        int confirm = JOptionPane.showConfirmDialog(
+                this,
+                "Are you sure you want to reset all claims?",
+                "Confirm Reset",
+                JOptionPane.YES_NO_OPTION
+        );
 
+        if (confirm == JOptionPane.YES_OPTION) {
+
+            claimCount = 0;
+            claimLog.clear();
+            claimLabel.setText("Total Claims: 0");
+            logArea.setText("");
+
+            // Sad panel
+            JPanel sadPanel = new JPanel();
+            sadPanel.setBackground(new Color(220, 220, 220));
+            sadPanel.setLayout(new BorderLayout(10, 10));
+
+            JLabel sadMessage = new JLabel(
+                    "😢 All claims have been reset.",
+                    SwingConstants.CENTER
+            );
+            sadMessage.setFont(new Font("Arial", Font.BOLD, 16));
+            sadMessage.setForeground(Color.RED);
+
+            sadPanel.add(sadMessage, BorderLayout.CENTER);
+
+            JOptionPane.showMessageDialog(
+                    this,
+                    sadPanel,
+                    "Tracker Reset",
+                    JOptionPane.WARNING_MESSAGE
+            );
+        }
     }
-
-
 }
