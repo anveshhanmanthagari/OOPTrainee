@@ -8,7 +8,8 @@ import java.util.ArrayList;
 /**
  * SecureSure Claim Tracker
  * This program implements a GUI application to track insurance claims processed by the SecureSure company.
- * It allows users to add claims, reset the claim count, and close the application. The program also logs each claim entry and celebrates milestones every 10 claims with a popup message.
+ * It allows users to add claims, reset the claim count, and close the application.
+ * The program also logs each claim entry and celebrates milestones every 10 claims with a popup message.
  *
  * @author Anvesh Hanmanthagari
  *
@@ -25,6 +26,29 @@ public class SecureSureClaimTracker extends JFrame {
     private JButton addButton;
     private JButton resetButton;
     private JButton shutdownFrame;
+
+    // Main Method (Runs GUI on EDT)
+
+    /**
+     * The main entry point of the application. It initializes the SecureSure Claim Tracker GUI and makes it visible.
+     * The GUI is launched on the Event Dispatch Thread (EDT) to ensure thread safety for Swing components.
+     * @param args
+     */
+    public static void main(String[] args) {
+        System.out.println("Starting SecureSure Claim Tracker...");
+
+        SwingUtilities.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+
+                new SecureSureClaimTracker().setVisible(true);
+
+            }
+
+        });
+
+    }
 
     /**
      * Constructor to set up the GUI components and layout for the SecureSure Claim Tracker application.
@@ -190,26 +214,5 @@ public class SecureSureClaimTracker extends JFrame {
 
     }
 
-    // Main Method (Runs GUI on EDT)
 
-    /**
-     * The main entry point of the application. It initializes the SecureSure Claim Tracker GUI and makes it visible.
-     * The GUI is launched on the Event Dispatch Thread (EDT) to ensure thread safety for Swing components.
-     * @param args
-     */
-    public static void main(String[] args) {
-        System.out.println("Starting SecureSure Claim Tracker...");
-
-        SwingUtilities.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-
-                new SecureSureClaimTracker().setVisible(true);
-
-            }
-
-        });
-
-    }
 }
