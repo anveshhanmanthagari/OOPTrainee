@@ -71,7 +71,7 @@ public class SecureSureClaimTracker extends JFrame {
         // Add Button
         addButton = new JButton(" ADD CLAIM TO TRACKER ");
         addButton.setFont(new Font("Arial", Font.BOLD, 18));
-        addButton.setBackground(new Color(34, 139, 34));
+        //addButton.setBackground(new Color(34, 139, 34));
         addButton.setForeground(new Color(34, 139, 34));
         centerPanel.add(addButton);
 
@@ -79,7 +79,7 @@ public class SecureSureClaimTracker extends JFrame {
         // Reset Button
         resetButton = new JButton(" RESET TRACKER ");
         resetButton.setFont(new Font("Arial", Font.BOLD, 18));
-        resetButton.setBackground(new Color(255, 204, 0));
+        //resetButton.setBackground(new Color(255, 204, 0));
         resetButton.setForeground(new Color(255, 204, 0));
         centerPanel.add(resetButton);
 
@@ -87,10 +87,10 @@ public class SecureSureClaimTracker extends JFrame {
         // Close Button
         shutdownFrame = new JButton(" CLOSE TRACKER ");
         shutdownFrame.setFont(new Font("Arial", Font.BOLD, 18));
-        shutdownFrame.setBackground(new Color(220, 20, 60));
+
+        //shutdownFrame.setBackground(new Color(220, 20, 60));
         shutdownFrame.setForeground(new Color(220, 20, 60));
         centerPanel.add(shutdownFrame);
-
         add(centerPanel, BorderLayout.CENTER);
 
         // Action Listeners
