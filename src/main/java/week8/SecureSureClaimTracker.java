@@ -165,7 +165,7 @@ public class SecureSureClaimTracker extends JFrame {
         claimCount = 0;
         claimLog.clear();
         System.out.println("Claim log reset.");
-        claimLabel.setText("Claims Processed: 0");
+        claimLabel.setText(" CLAIMS PROCESSED : 0 ");
 
     }
 
