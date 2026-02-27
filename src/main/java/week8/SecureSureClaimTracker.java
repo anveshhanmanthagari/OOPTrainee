@@ -5,6 +5,14 @@ import java.awt.*;
 
 import java.util.ArrayList;
 
+/**
+ * SecureSure Claim Tracker
+ * This program implements a GUI application to track insurance claims processed by the SecureSure company.
+ * It allows users to add claims, reset the claim count, and close the application. The program also logs each claim entry and celebrates milestones every 10 claims with a popup message.
+ *
+ * @author Anvesh Hanmanthagari
+ *
+ */
 public class SecureSureClaimTracker extends JFrame {
 
     private int claimCount = 0;
@@ -19,7 +27,10 @@ public class SecureSureClaimTracker extends JFrame {
     private JButton shutdownFrame;
 
     /**
-     * Constructor to set up the GUI components and layout for the SecureSure Claim Tracker application. It initializes the frame, header panel with logo and title, and the main center panel with claim count label and action buttons. It also sets up action listeners for each button to handle claim processing, resetting, and shutting down the application.
+     * Constructor to set up the GUI components and layout for the SecureSure Claim Tracker application.
+     * It initializes the frame, header panel with logo and title, and the main center panel with claim count
+     * label and action buttons. It also sets up action listeners for each button to handle claim processing,
+     * resetting, and shutting down the application.
      */
     public SecureSureClaimTracker() {
 
@@ -71,6 +82,7 @@ public class SecureSureClaimTracker extends JFrame {
         // Add Button
         addButton = new JButton(" ADD CLAIM TO TRACKER ");
         addButton.setFont(new Font("Arial", Font.BOLD, 18));
+
         //addButton.setBackground(new Color(34, 139, 34));
         addButton.setForeground(new Color(34, 139, 34));
         centerPanel.add(addButton);
@@ -79,6 +91,7 @@ public class SecureSureClaimTracker extends JFrame {
         // Reset Button
         resetButton = new JButton(" RESET TRACKER ");
         resetButton.setFont(new Font("Arial", Font.BOLD, 18));
+
         //resetButton.setBackground(new Color(255, 204, 0));
         resetButton.setForeground(new Color(255, 204, 0));
         centerPanel.add(resetButton);
@@ -115,7 +128,12 @@ public class SecureSureClaimTracker extends JFrame {
 
     /**
      *
-     * Method to update the claim count, log the claim, and update the label. It also checks for milestones every 10 claims and displays a celebration message.
+     * Method to update the claim count, log the claim, and update the label.
+     * It also checks for milestones every 10 claims and displays a celebration message.
+     * This method is called when the "ADD CLAIM TO TRACKER" button is clicked, allowing the user to increment
+     * the claim count and see real-time updates in the GUI.
+     * It provides console feedback for each claim processed and celebrates milestones
+     * with a popup message and color change in the label.
      *
      */
     private void updateClaimCount() {
@@ -159,6 +177,9 @@ public class SecureSureClaimTracker extends JFrame {
 
     /*
      * Method to reset claim count and log, and update the label accordingly.
+     * This method is called when the reset button is clicked,
+     * allowing the user to start fresh with a new claim count and an empty log.
+     * It also provides console feedback about the reset action.
      */
     private void resetClaims() {
 
@@ -170,6 +191,12 @@ public class SecureSureClaimTracker extends JFrame {
     }
 
     // Main Method (Runs GUI on EDT)
+
+    /**
+     * The main entry point of the application. It initializes the SecureSure Claim Tracker GUI and makes it visible.
+     * The GUI is launched on the Event Dispatch Thread (EDT) to ensure thread safety for Swing components.
+     * @param args
+     */
     public static void main(String[] args) {
         System.out.println("Starting SecureSure Claim Tracker...");
 
